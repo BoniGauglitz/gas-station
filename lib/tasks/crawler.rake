@@ -9,12 +9,8 @@ namespace :crawler do
 
     doc = Nokogiri::HTML(open(url))
     doc.css('.pin').map do |item|
-      name = item.css('.titulo').text.strip
       street = item.css('.endereco').text.strip
       city = item.css('.localizacao').text.strip
-      price = item.css('.preco').text.strip
-
-      address = "#{street}, #{city}"
 
       lat = item.at_css('.posto-geo-lat')['value']
       long = item.at_css('.posto-geo-lng')['value']
@@ -24,16 +20,18 @@ namespace :crawler do
         long = 0
       end
 
-      station = Station.new
-      station.name = name
-      station.address = address
-      station.gas_price = price
-      station.coordinate = {
-        longitude: long,
-        latitude: lat
+      attributes = {
+        name: item.css('.titulo').text.strip,
+        address: "#{street}, #{city}",
+        gas_price: item.css('.preco').text.strip,
+        coordinate: {
+          longitude: long,
+          latitude: lat
+        }
       }
 
-      station.save
+      station = Station.find_or_initialize_by({ name: attributes[:name] })
+      station.update_attributes(attributes)
     end
   end
 end
