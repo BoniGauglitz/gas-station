@@ -1,0 +1,19 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  name: MyString
+  address: MyString
+  gas_price: 
+  etanol_price: 
+  diesel_price: 
+  coordinate: 
+  rate: 
+
+two:
+  name: MyString
+  address: MyString
+  gas_price: 
+  etanol_price: 
+  diesel_price: 
+  coordinate: 
+  rate: 
